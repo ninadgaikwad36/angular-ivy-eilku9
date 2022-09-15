@@ -1,4 +1,87 @@
-<hello name="{{ name }}"></hello>
 <p>
   Start editing to see some magic1 :)
 </p>
+<div>
+  <button type="button" (click)="add()">Add User</button><br><br>
+  <form  [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+  First Name <input type="text" name="firstName" formControlName="fName"><br>
+  <div *ngIf="myForm.get('fName').invalid && (myForm.get('fName').dirty || myForm.get('fName').touched)">
+    Please provide first name.
+  </div>
+  <br>
+  Last Name <input type="text" name="lastName" formControlName="lName"><br>
+  <div *ngIf="myForm.get('lName').invalid && (myForm.get('lName').dirty || myForm.get('lName').touched)">
+  Please provide last name.
+</div>
+  <br>
+  Email <input type="text" name="email" formControlName="email"><br>
+  <div *ngIf="myForm.get('email').invalid && myForm.get('email').errors['required'] && (myForm.get('email').dirty || myForm.get('email').touched)">
+  Please provide email.
+</div>
+<div *ngIf="myForm.get('email').invalid && myForm.get('email').errors['email'] && (myForm.get('email').dirty || myForm.get('email').touched)">
+Please provide valid email.
+</div>
+  <br>
+  Phone <input maxlength="10" type="number" name="phone" formControlName="phone"><br>
+  <div *ngIf="myForm.get('phone').invalid && myForm.get('phone').errors['required'] && (myForm.get('phone').dirty || myForm.get('phone').touched)">
+  Please provide phone.
+  </div>
+  <div *ngIf="myForm.get('phone').invalid && myForm.get('phone').errors['minLength'] && (myForm.get('phone').dirty || myForm.get('phone').touched)">
+  Please provide valid phone.
+  </div>
+  <br>
+  Company <input type="text" name="company" formControlName="company"><br><br>
+  Gender <br>
+  <input type="radio" name="gender" value="Male" formControlName="gender">Male
+  <input type="radio" name="gender" value="Female" formControlName="gender">Female<br>
+  <div *ngIf="myForm.get('gender').invalid && myForm.get('gender').errors['required'] && (myForm.get('gender').dirty || myForm.get('gender').touched)">
+  Please provide phone.
+  </div>
+  <br>
+  DOB <input type="date" name="dob" formControlName="dt"><br>
+  <div *ngIf="myForm.get('dt').invalid && myForm.get('dt').errors['required'] && (myForm.get('dt').dirty || myForm.get('dt').touched)">
+  Please provide DOB.
+  </div>
+  <br>
+  Password <input type="password" name="password" formControlName="pass"><br>
+  <div *ngIf="myForm.get('pass').invalid && myForm.get('pass').errors['required'] && (myForm.get('pass').dirty || myForm.get('pass').touched)">
+  Please provide password.
+  </div>
+  <br>
+  Confirm Password <input type="password" name="cpassword" formControlName="cPass"><br>
+  <div *ngIf="myForm.get('cPass').invalid && myForm.get('cPass').errors['required'] && (myForm.get('cPass').dirty || myForm.get('cPass').touched)">
+  Please provide confirm password.
+  </div>
+  <br>
+  <div *ngIf="myForm.errors && myForm.errors['notmatched']  && (myForm.get('cPass').dirty || myForm.get('cPass').touched)">
+  Pass and confirm pass does not match
+  </div>
+  <br>
+  <button type="submit"> {{ updateId == -1 ? 'Register' : 'Update' }}</button>&nbsp;<button type="button" (click)="reset()">Cancel</button>
+  </form>
+</div>
+
+<div>
+  <table>
+    <tr>
+      <td>First name</td>
+      <td>Last name</td>
+      <td>Email</td>
+      <td>Phone</td>
+      <td>Company</td>
+      <td>DOB</td>
+      <td>Edit</td>
+      <td>Delete</td>
+    </tr>
+    <tr *ngFor="let user of userList;let i=index;">
+      <td>{{user.fName}}</td>
+      <td>{{user.lName}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.phone}}</td>
+      <td>{{user.company}}</td>
+      <td>{{user.dt}}</td>
+      <td><button type="button" (click)="setValues(i)">Edit</button></td>
+      <td><button type="button" (click)="delete(i)">Delete</button></td>
+    </tr>
+  </table>
+</div>
